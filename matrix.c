@@ -18,7 +18,7 @@ struct matrix * make_translate(double x, double y, double z) {
   trans = new_matrix(4,3);
   ident(trans);
   add_point(trans,x,y,z);
-  print_matrix(trans);
+  // print_matrix(trans);
   return trans;
 }
 
@@ -37,8 +37,12 @@ struct matrix * make_scale(double x, double y, double z) {
   scal->m[1][1] = y;
   scal->m[2][2] = z;
   scal->m[3][3]=1;
-  print_matrix(scal);
+  // print_matrix(scal);
   return scal;
+}
+
+double degtorad(double deg){
+  return (deg/180)*M_PI;
 }
 
 /*======== struct matrix * make_rotX() ==========
@@ -48,7 +52,18 @@ Returns: The rotation matrix created using theta as the
 angle of rotation and X as the axis of rotation.
 ====================*/
 struct matrix * make_rotX(double theta) {
-  return NULL;
+  struct matrix * rotX;
+  double rad = degtorad(theta);
+  rotX = new_matrix(4,4);
+  rotX->lastcol +=4;
+  rotX->m[0][0] = 1;
+  rotX->m[1][1] = cos(rad);
+  rotX->m[1][2] = -1*sin(rad);
+  rotX->m[2][1] = sin(rad);
+  rotX->m[2][2] = cos(rad);
+  rotX->m[3][3] = 1;
+  print_matrix(rotX);
+  return rotX;
 }
 
 /*======== struct matrix * make_rotY() ==========
@@ -58,7 +73,18 @@ Returns: The rotation matrix created using theta as the
 angle of rotation and Y as the axis of rotation.
 ====================*/
 struct matrix * make_rotY(double theta) {
-  return NULL;
+  struct matrix * rotY;
+  double rad = degtorad(theta);
+  rotY = new_matrix(4,4);
+  rotY->lastcol +=4;
+  rotY->m[0][0] = cos(rad);
+  rotY->m[0][2] = sin(rad);
+  rotY->m[1][1] = 1;
+  rotY->m[2][0] = -1*sin(rad);
+  rotY->m[2][2] = cos(rad);
+  rotY->m[3][3] = 1;
+  print_matrix(rotY);
+  return rotY;
 }
 
 /*======== struct matrix * make_rotZ() ==========
@@ -68,7 +94,18 @@ Returns: The rotation matrix created using theta as the
 angle of rotation and Z as the axis of rotation.
 ====================*/
 struct matrix * make_rotZ(double theta) {
-  return NULL;
+  struct matrix * rotZ;
+  double rad = degtorad(theta);
+  rotZ = new_matrix(4,4);
+  rotZ->lastcol +=4;
+  rotZ->m[0][0] = cos(rad);
+  rotZ->m[0][1] = -1*sin(rad);
+  rotZ->m[1][0] = sin(rad);
+  rotZ->m[1][1] = cos(rad);
+  rotZ->m[2][2] = 1;
+  rotZ->m[3][3] = 1;
+  print_matrix(rotZ);
+  return rotZ;
 }
 
 

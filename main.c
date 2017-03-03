@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "ml6.h"
 #include "display.h"
@@ -27,5 +28,5 @@ int main(int argc, char **argv) {
   free_matrix( edges );
   free_matrix( transform ); */
   // make_translate(1,2,3);
-  make_scale(1,2,3);
+  make_rotY(90);
 }
