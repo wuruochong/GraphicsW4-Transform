@@ -10,7 +10,7 @@
 #include "parser.h"
 
 int main(int argc, char **argv) {
-  /*
+  
 
   screen s;
   struct matrix * edges;
@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
 
 
   free_matrix( edges );
-  free_matrix( transform ); */
+  free_matrix( transform );
   // make_translate(1,2,3);
-  make_rotY(90);
+  // make_rotY(90);
 }
