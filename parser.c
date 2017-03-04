@@ -81,13 +81,23 @@ void parse_file ( char * filename,
 
       if(strcmp("ident",line)==0){
         ident(transform);
+        printf("after ident\n");
+        print_matrix(transform);
       }
 
       else if(strcmp("apply",line)==0){
+        printf("transform: \n");
+        print_matrix(transform);
+        printf("edges: \n");
+        print_matrix(edges);
         matrix_mult(transform, edges);
+        printf("result \n");
+        print_matrix(edges);
       }
 
       else if(strcmp("display",line)==0){
+        // print_matrix(edges);
+        clear_screen(s);
         draw_lines(edges,s,c);
         display(s);
         save_extension(s,"lines.png");
@@ -98,7 +108,6 @@ void parse_file ( char * filename,
       }
 
       else if(strcmp("line",line)==0){
-        printf("checkpoint1\n");
         mode = 1;
       }
 
@@ -116,7 +125,6 @@ void parse_file ( char * filename,
     }
 
     else if(mode == 1){
-      printf("checkpoint2\n");
       char * tmpline = strdup(line);
       int x0;
       int y0;
@@ -125,23 +133,41 @@ void parse_file ( char * filename,
       int y1;
       int z1;
       x0 = atoi(strsep(&tmpline," "));
-      printf("checkpoint3\n");
       y0 = atoi(strsep(&tmpline," "));
       z0 = atoi(strsep(&tmpline," "));
       x1 = atoi(strsep(&tmpline," "));
       y1 = atoi(strsep(&tmpline," "));
       z1 = atoi(line);
-      printf("%d %d %d %d %d %d\n",x0,y0,z0,x1,y1,z1);
+      // printf("%d %d %d %d %d %d\n",x0,y0,z0,x1,y1,z1);
       add_edge(edges,x0,y0,z0,x1,y1,z1);
       mode=0;
     }
 
-  /*  else if(mode == 2){
+    else if(mode == 2){
+      char * tmpline = strdup(line);
       int sx;
       int sy;
       int sz;
+      sx = atoi(strsep(&tmpline," "));
+      sy = atoi(strsep(&tmpline," "));
+      sz = atoi(line);
+      // printf("numbers: %d %d %d",sx,sy,sz);
+      struct matrix *tmpmatrix = make_scale(sx,sy,sz);
+      matrix_mult(tmpmatrix,transform);
+      mode = 0;
+    }
 
-    } */
-
+    else if(mode == 4){
+      char * tmpline = strdup(line);
+      int tx;
+      int ty;
+      int tz;
+      tx = atoi(strsep(&tmpline," "));
+      ty = atoi(strsep(&tmpline," "));
+      tz = atoi(line);
+      struct matrix *tmpmatrix = make_translate(tx,ty,tz);
+      matrix_mult(tmpmatrix,transform);
+      mode = 0;
+    }
   }
 }

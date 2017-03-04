@@ -31,13 +31,12 @@ as the scale factors
 ====================*/
 struct matrix * make_scale(double x, double y, double z) {
   struct matrix * scal;
-  scal = new_matrix(4,4);
-  scal->lastcol+=4;
+  scal = new_matrix(4, 4);
+  matrix_init(scal);
   scal->m[0][0] = x;
   scal->m[1][1] = y;
   scal->m[2][2] = z;
   scal->m[3][3]=1;
-  // print_matrix(scal);
   return scal;
 }
 
@@ -55,7 +54,7 @@ struct matrix * make_rotX(double theta) {
   struct matrix * rotX;
   double rad = degtorad(theta);
   rotX = new_matrix(4,4);
-  rotX->lastcol +=4;
+  matrix_init(rotX);
   rotX->m[0][0] = 1;
   rotX->m[1][1] = cos(rad);
   rotX->m[1][2] = -1*sin(rad);
@@ -76,7 +75,7 @@ struct matrix * make_rotY(double theta) {
   struct matrix * rotY;
   double rad = degtorad(theta);
   rotY = new_matrix(4,4);
-  rotY->lastcol +=4;
+  matrix_init(rotY);
   rotY->m[0][0] = cos(rad);
   rotY->m[0][2] = sin(rad);
   rotY->m[1][1] = 1;
@@ -97,7 +96,7 @@ struct matrix * make_rotZ(double theta) {
   struct matrix * rotZ;
   double rad = degtorad(theta);
   rotZ = new_matrix(4,4);
-  rotZ->lastcol +=4;
+  matrix_init(rotZ);
   rotZ->m[0][0] = cos(rad);
   rotZ->m[0][1] = -1*sin(rad);
   rotZ->m[1][0] = sin(rad);
@@ -219,6 +218,20 @@ struct matrix *new_matrix(int rows, int cols) {
   return m;
 }
 
+void matrix_init(struct matrix * m){;
+  // printf("matrix init running\n");
+  int count = 0;
+  while ((m->lastcol)<(m->cols)){
+    // printf("lastcol: %d\n",m->lastcol);
+    while (count<m->rows){
+      m->m[count][m->lastcol] = 0;
+      // printf("m[%d][%d]\n",count,m->lastcol);
+      count ++;
+    }
+    count = 0;
+    m->lastcol+=1;
+  }
+}
 
 /*-------------- void free_matrix() --------------
 Inputs:  struct matrix *m

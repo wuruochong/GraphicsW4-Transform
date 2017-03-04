@@ -1,0 +1,11 @@
+line
+0 0 0 125 125 125
+display
+ident
+scale
+2 2 2
+translate
+100 100 100
+apply
+display
+quit
