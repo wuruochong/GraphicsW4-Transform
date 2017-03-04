@@ -126,18 +126,18 @@ void parse_file ( char * filename,
 
     else if(mode == 1){
       char * tmpline = strdup(line);
-      int x0;
-      int y0;
-      int z0;
-      int x1;
-      int y1;
-      int z1;
-      x0 = atoi(strsep(&tmpline," "));
-      y0 = atoi(strsep(&tmpline," "));
-      z0 = atoi(strsep(&tmpline," "));
-      x1 = atoi(strsep(&tmpline," "));
-      y1 = atoi(strsep(&tmpline," "));
-      z1 = atoi(line);
+      double x0;
+      double y0;
+      double z0;
+      double x1;
+      double y1;
+      double z1;
+      x0 = atof(strsep(&tmpline," "));
+      y0 = atof(strsep(&tmpline," "));
+      z0 = atof(strsep(&tmpline," "));
+      x1 = atof(strsep(&tmpline," "));
+      y1 = atof(strsep(&tmpline," "));
+      z1 = atof(tmpline);
       // printf("%d %d %d %d %d %d\n",x0,y0,z0,x1,y1,z1);
       add_edge(edges,x0,y0,z0,x1,y1,z1);
       mode=0;
@@ -145,26 +145,48 @@ void parse_file ( char * filename,
 
     else if(mode == 2){
       char * tmpline = strdup(line);
-      int sx;
-      int sy;
-      int sz;
-      sx = atoi(strsep(&tmpline," "));
-      sy = atoi(strsep(&tmpline," "));
-      sz = atoi(line);
+      double sx;
+      double sy;
+      double sz;
+      sx = atof(strsep(&tmpline," "));
+      sy = atof(strsep(&tmpline," "));
+      sz = atof(tmpline);
       // printf("numbers: %d %d %d",sx,sy,sz);
       struct matrix *tmpmatrix = make_scale(sx,sy,sz);
       matrix_mult(tmpmatrix,transform);
       mode = 0;
     }
 
+    else if(mode == 3){
+      char * tmpline = strdup(line);
+      char * ax;
+      double t;
+      struct matrix *tmpmatrix;
+      ax = strsep(&tmpline, " ");
+      t = atof(tmpline);
+      if (strcmp(ax,"x")==0){
+        tmpmatrix = make_rotX(t);
+        matrix_mult(tmpmatrix,transform);
+      }
+      else if (strcmp(ax,"y")==0){
+        tmpmatrix = make_rotY(t);
+        matrix_mult(tmpmatrix,transform);
+      }
+      else if (strcmp(ax,"z")==0){
+        tmpmatrix = make_rotZ(t);
+        matrix_mult(tmpmatrix,transform);
+      }
+      mode = 0;
+    }
+
     else if(mode == 4){
       char * tmpline = strdup(line);
-      int tx;
-      int ty;
-      int tz;
-      tx = atoi(strsep(&tmpline," "));
-      ty = atoi(strsep(&tmpline," "));
-      tz = atoi(line);
+      double tx;
+      double ty;
+      double tz;
+      tx = atof(strsep(&tmpline," "));
+      ty = atof(strsep(&tmpline," "));
+      tz = atof(tmpline);
       struct matrix *tmpmatrix = make_translate(tx,ty,tz);
       matrix_mult(tmpmatrix,transform);
       mode = 0;

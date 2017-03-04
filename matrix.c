@@ -41,7 +41,7 @@ struct matrix * make_scale(double x, double y, double z) {
 }
 
 double degtorad(double deg){
-  return (deg/180)*M_PI;
+  return (deg*M_PI)/180;
 }
 
 /*======== struct matrix * make_rotX() ==========
@@ -95,6 +95,7 @@ angle of rotation and Z as the axis of rotation.
 struct matrix * make_rotZ(double theta) {
   struct matrix * rotZ;
   double rad = degtorad(theta);
+  printf("rad = %f\n", rad);
   rotZ = new_matrix(4,4);
   matrix_init(rotZ);
   rotZ->m[0][0] = cos(rad);
