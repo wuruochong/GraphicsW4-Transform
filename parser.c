@@ -28,7 +28,7 @@ The file follows the following format:
 	 scale: create a scale matrix,
 	    then multiply the transform matrix by the scale matrix -
 	    takes 3 arguments (sx, sy, sz)
-	 translate: create a translation matrix,
+	 move: create a translation matrix,
 	    then multiply the transform matrix by the translation matrix -
 	    takes 3 arguments (tx, ty, tz)
 	 rotate: create an rotation matrix,
@@ -119,7 +119,7 @@ void parse_file ( char * filename,
         mode = 3;
       }
 
-      else if(strcmp("translate",line)==0){
+      else if(strcmp("move",line)==0){
         mode = 4;
       }
     }
