@@ -104,7 +104,7 @@ void parse_file ( char * filename,
       }
 
       else if(strcmp("quit",line)==0){
-        return;   //Is this right?
+        return;   
       }
 
       else if(strcmp("line",line)==0){
