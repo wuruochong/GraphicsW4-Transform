@@ -67,7 +67,7 @@ void parse_file ( char * filename,
   c.blue = 0;
   // printf("parse_file running\n");
 
-  int mode = 0;  //0 = normal, 1 = reading line args, 2 = reading scale args, 3 = reading rot args, 4 = reading transformation args
+  int mode = 0;  //0 = normal, 1 = reading line args, 2 = reading scale args, 3 = reading rot args, 4 = reading transformation args, 5 = saving
 
   if ( strcmp(filename, "stdin") == 0 )
     f = stdin;
@@ -100,11 +100,11 @@ void parse_file ( char * filename,
         clear_screen(s);
         draw_lines(edges,s,c);
         display(s);
-        save_extension(s,"lines.png");
+        // save_extension(s,"lines.png");
       }
 
       else if(strcmp("quit",line)==0){
-        return;   
+        return;
       }
 
       else if(strcmp("line",line)==0){
@@ -121,6 +121,10 @@ void parse_file ( char * filename,
 
       else if(strcmp("move",line)==0){
         mode = 4;
+      }
+
+      else if (strcmp("save",line)==0){
+        mode = 5;
       }
     }
 
@@ -189,6 +193,11 @@ void parse_file ( char * filename,
       tz = atof(tmpline);
       struct matrix *tmpmatrix = make_translate(tx,ty,tz);
       matrix_mult(tmpmatrix,transform);
+      mode = 0;
+    }
+
+    else if (mode == 5){
+      save_extension(s,line);
       mode = 0;
     }
   }
